@@ -32,13 +32,15 @@ final class RequestService {
     }
     
     
-    func requestDataFromServer(urlstring : String, completion : @escaping (Result<Data, ErrorResult>)->Void)->URLSessionTask?{
+    func requestDataFromServer(urlstring : String, params:[String:String] = [:], completion : @escaping (Result<Data, ErrorResult>)->Void)->URLSessionTask?{
         
-        guard let url = URL(string: urlstring) else {
+        guard var url = URL(string: urlstring) else {
             completion(.failure(.network(string: "invalid url")))
             return nil
         }
-        
+        if !params.isEmpty, let processedURL = processUrl(params: params, url: url) {
+            url = processedURL
+        }
         var request = RequestFactory.request(method: .GET, url: url)
         
         if let reachability = Reachability(), !reachability.isReachable{
@@ -58,6 +60,19 @@ final class RequestService {
         task.resumeTask()
         return task as? URLSessionTask
     }
+    func processUrl(params: [String:String], url:URL) -> URL? {
+        if let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
+        {
+            var components = urlComponents
+            components.queryItems = params.map { arg -> URLQueryItem in
+                let (key, value) = arg
+                return URLQueryItem(name: key, value: value)
+            }
+            components.percentEncodedQuery = components.percentEncodedQuery?.replacingOccurrences(of: "+", with: "%2B")
+            return components.url
+        }
+        return nil
+    }
 }
 
 
@@ -75,4 +90,3 @@ extension URLSessionTask: URLSessionTaskProtocol {
     }
 }
 
-//Reference:- https://medium.com/flawless-app-stories/the-complete-guide-to-network-unit-testing-in-swift-db8b3ee2c327
