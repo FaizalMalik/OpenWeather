@@ -1,0 +1,107 @@
+//
+//  CitySearchViewController.swift
+//  OpenWeatherApp
+//
+//  Created by Faizal on 08/07/2021.
+//
+
+import UIKit
+protocol CitySearchViewControllerDelegate: AnyObject {
+    func didSelectCity(city: City)
+}
+
+class CitySearchViewController: UIViewController {
+    // MARK: Outlets
+
+    @IBOutlet var searchBar: UISearchBar!
+    @IBOutlet var tableViewCityList: UITableView!
+
+    // MARK: Properties
+
+    var viewModel: CitySearchViewModel = {
+        CitySearchViewModel()
+    }()
+
+    weak var delegate: CitySearchViewControllerDelegate?
+    private var datasourceCityList: TableViewDataSource<CityListTableViewCell, City>!
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupView()
+        bindViewMode()
+    }
+
+    // MARK: Setup Methods
+
+    func setupView() {
+        searchBar.placeholder = "Search city"
+        searchBar.becomeFirstResponder()
+        tableViewCityList.dataSource = nil
+    }
+
+    func bindViewMode() {
+        // Lisening to loading status
+        viewModel.showLoadingStatus.addAndNotify(fireNow: true, observer: self) { [weak self] status, _ in
+            if status {
+                Loader.startAnimating(view: self?.tableViewCityList)
+            } else {
+                Loader.stopAnimating(view: self?.tableViewCityList)
+            }
+        }
+
+        // Lisening to cityList changes
+        viewModel.cityList.addAndNotify(fireNow: false, observer: self) { [weak self] _ in
+            self?.updateDataSource()
+        }
+    }
+
+    // DataSource Update
+    func updateDataSource() {
+        datasourceCityList = TableViewDataSource(cellIdentifier: CityListTableViewCell.className, items: viewModel.cityList.value, configureCell: { cell, vm, _ in
+
+            cell.city = vm
+        })
+
+        DispatchQueue.main.async {
+            self.tableViewCityList.dataSource = self.datasourceCityList
+            self.tableViewCityList.reloadData()
+        }
+    }
+
+    // MARK: - Button Actions
+
+    @IBAction func actionClose(_: Any) {
+        dismiss(animated: true) {}
+    }
+
+    /*
+     // MARK: - Navigation
+
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+         // Get the new view controller using segue.destination.
+         // Pass the selected object to the new view controller.
+     }
+     */
+}
+
+extension CitySearchViewController: UISearchBarDelegate {
+    func searchBar(_: UISearchBar, textDidChange searchText: String) {
+        guard searchText.count > 3 else {
+            return
+        }
+
+        viewModel.fetchCityList(query: searchText)
+    }
+}
+
+extension CitySearchViewController: UITableViewDelegate {
+    func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard viewModel.cityList.value.indices.contains(indexPath.row) else {
+            return
+        }
+        let city = viewModel.cityList.value[indexPath.row]
+        delegate?.didSelectCity(city: city)
+        dismiss(animated: true) {}
+    }
+}

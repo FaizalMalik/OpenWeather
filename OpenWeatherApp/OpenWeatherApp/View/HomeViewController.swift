@@ -10,59 +10,72 @@ import Foundation
 import UIKit
 
 class HomeViewController: UIViewController {
-    //MARK: Outlets
-    @IBOutlet weak var viewBGVideo: UIView!
-    @IBOutlet weak var lblTitle: UILabel!
-    @IBOutlet weak var lblCity: UILabel!
-    @IBOutlet weak var lblWeatherDesc: UILabel!
-    @IBOutlet weak var lblTemp: UILabel!
-    @IBOutlet weak var lblDate: UILabel!
-    @IBOutlet weak var lblFeelLike: UILabel!
-    @IBOutlet weak var lblWind: UILabel!
-    @IBOutlet weak var lblHumidity: UILabel!
-    @IBOutlet weak var lblSunrise: UILabel!
-    @IBOutlet weak var lblSunset: UILabel!
-    
-    //MARK: Properties
+    // MARK: Outlets
+
+    @IBOutlet var viewBGVideo: UIView!
+    @IBOutlet var lblTitle: UILabel!
+    @IBOutlet var lblCity: UILabel!
+    @IBOutlet var lblWeatherDesc: UILabel!
+    @IBOutlet var lblTemp: UILabel!
+    @IBOutlet var lblDate: UILabel!
+    @IBOutlet var lblFeelLike: UILabel!
+    @IBOutlet var lblWind: UILabel!
+    @IBOutlet var lblHumidity: UILabel!
+    @IBOutlet var lblSunrise: UILabel!
+    @IBOutlet var lblSunset: UILabel!
+
+    // MARK: Properties
+
     private var player: AVPlayer?
     private var playerObserver: NSObjectProtocol?
-    var viewModel:HomeViewModel = {
-        return HomeViewModel()
+    var viewModel: HomeViewModel = {
+        HomeViewModel()
     }()
+
+    lazy var router: HomeRouter = {
+        HomeRouter(viewModel: viewModel)
+    }()
+
+    enum Routes: String {
+        case citySearch
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-         setupView()
-         bindViewMode()
+        setupView()
+        bindViewMode()
     }
-    override func viewWillAppear(_ animated: Bool) {
+
+    override func viewWillAppear(_: Bool) {
         playVideo()
     }
-    
-    func bindViewMode(){
-        
-        viewModel.showLoadingStatus.addAndNotify(fireNow: false, observer: self) { (status,message) in
-            if status{
+
+    func bindViewMode() {
+        // Lisening to loading status
+        viewModel.showLoadingStatus.addAndNotify(fireNow: false, observer: self) { status, _ in
+            if status {
                 Loader.startAnimating()
-            }else{
+            } else {
                 Loader.stopAnimating()
             }
         }
-        viewModel.weatherHomeModel.addAndNotify(fireNow: false, observer: self) {[weak self] (response) in
+
+        // Lisening to weather data changes
+        viewModel.weatherHomeModel.addAndNotify(fireNow: false, observer: self) { [weak self] response in
             self?.updateUI(vm: response)
         }
-        
-        viewModel.fetchWeather()
+
+        viewModel.fetchWeather() // Calling the default city
     }
-    //MARK: Setup Methods
-    
-    func setupView(){
-        
-     lblTitle.text = viewModel.title
-     configureVideoView()
-        
+
+    // MARK: Setup Methods
+
+    func setupView() {
+        lblTitle.text = viewModel.title
+        configureVideoView()
     }
-    func updateUI(vm:WeatherHomeModel){
+
+    func updateUI(vm: WeatherHomeModel) {
         DispatchQueue.main.async {
             self.lblCity.text = vm.name
             self.lblWeatherDesc.text = vm.descriptionWeather
@@ -75,7 +88,9 @@ class HomeViewController: UIViewController {
             self.lblSunrise.text = vm.sunRise
         }
     }
-    //MARK: Video methods
+
+    // MARK: Video methods
+
     private func configureVideoView() {
         guard let videoUrl = Bundle.main.url(forResource: App.backgroundVideo,
                                              withExtension: "mp4") else { return }
@@ -89,16 +104,30 @@ class HomeViewController: UIViewController {
                                                                 queue: .main) { [weak self] _ in
             self?.playVideo()
         }
-      
     }
+
     private func playVideo(fromStart: Bool = true) {
         if fromStart {
             player?.seek(to: .zero)
         }
         player?.play()
     }
-    
+
     deinit {
         NotificationCenter.default.removeObserver(self)
+    }
+
+    // MARK: Button Actionn
+
+    @IBAction func searchAction(_: UIButton) {
+        router.route(to: Routes.citySearch.rawValue, from: self, parameters: [:])
+    }
+}
+
+// MARK: CitySearchViewControllerDelegate
+
+extension HomeViewController: CitySearchViewControllerDelegate {
+    func didSelectCity(city: City) {
+        viewModel.fetchWeather(ofCity: city.name ?? "London")
     }
 }
