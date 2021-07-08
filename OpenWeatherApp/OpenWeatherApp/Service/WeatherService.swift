@@ -8,7 +8,7 @@
 import Foundation
 protocol WeatherServiceProtocol : class{
     
-    func fetchWeather(ofCity city : String, _ completion: @escaping ((Result<WeatheResponse, ErrorResult>) -> Void))
+    func fetchWeather(ofCity city : String, _ completion: @escaping ((Result<WeatherResponse, ErrorResult>) -> Void))
 }
 
 final class WeatherService : ResponseHandler, WeatherServiceProtocol{
@@ -16,7 +16,7 @@ final class WeatherService : ResponseHandler, WeatherServiceProtocol{
     static let shared = WeatherService()
     var task : URLSessionTask?
     
-    func fetchWeather(ofCity city : String, _ completion: @escaping ((Result<WeatheResponse, ErrorResult>) -> Void)) {
+    func fetchWeather(ofCity city : String, _ completion: @escaping ((Result<WeatherResponse, ErrorResult>) -> Void)) {
         
         let params: [String: String] = ["q": city,
                                         "units": App.unit,

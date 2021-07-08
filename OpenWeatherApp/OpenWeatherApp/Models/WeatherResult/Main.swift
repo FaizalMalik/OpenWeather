@@ -6,10 +6,10 @@ import Foundation
 
 struct Main : Codable {
 
-	let feelsLike : Double?
-	let humidity : Int?
+	let feelsLike : Double
+	let humidity : Int
 	let pressure : Int?
-	let temp : Double?
+	let temp : Double
 	let tempMax : Double?
 	let tempMin : Double?
 

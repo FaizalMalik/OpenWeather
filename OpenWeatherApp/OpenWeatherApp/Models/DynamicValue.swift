@@ -7,38 +7,43 @@
 
 import Foundation
 
+class DynamicValue<T> {
 
-class DynamicValue<T>{
-   
-    typealias CompletionHandler = ((T)->Void)
+    typealias CompletionHandler = ((T) -> Void)
 
-    private var observers = [String : CompletionHandler]()
-    
-    var value : T{
-        didSet{
+    var value: T {
+        didSet {
             self.notify()
         }
     }
-    
-    init(value : T) {
+
+    private var observers = [String: CompletionHandler]()
+
+    init(_ value: T) {
         self.value = value
     }
-    
-    public func addAndNotify(observer : NSObject, completionHandler : @escaping CompletionHandler){
-        self.addObserver(observer: observer, completionHandler: completionHandler)
-        self.notify()
+
+    public func addObserver(_ observer: NSObject, completionHandler: @escaping CompletionHandler) {
+        let description = observer.description
+        observers[description] = completionHandler
+       
     }
-    
-    public func addObserver(observer : NSObject, completionHandler : @escaping CompletionHandler){
-        observers[observer.description] = completionHandler
-    }
-    
-    func notify(){
-        observers.forEach { (observer) in
-            observer.value(value)
+
+    public func addAndNotify(fireNow:Bool = true, observer: NSObject, completionHandler: @escaping CompletionHandler) {
+        self.addObserver(observer, completionHandler: completionHandler)
+        if fireNow {
+             self.notify()
         }
+       
     }
-    
+    public func remove(_ observer: NSObject) {
+        
+       observers.removeAll()
+       }
+    private func notify() {
+        observers.forEach({ $0.value(value) })
+    }
+
     deinit {
         observers.removeAll()
     }

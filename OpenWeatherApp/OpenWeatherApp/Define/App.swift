@@ -11,6 +11,7 @@ struct App {
     static let appId = "504f2c7a9dfb496a1c2042d2fc1a46ca"
     static let baseURL = "https://api.openweathermap.org/"
     static let unit = "metric"
+    static let backgroundVideo = "sky"
 
 }
 
