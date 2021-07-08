@@ -38,6 +38,7 @@ class HomeViewController: UIViewController {
 
     enum Routes: String {
         case citySearch
+        case favrouite
     }
 
     override func viewDidLoad() {
@@ -121,6 +122,10 @@ class HomeViewController: UIViewController {
 
     @IBAction func searchAction(_: UIButton) {
         router.route(to: Routes.citySearch.rawValue, from: self, parameters: [:])
+    }
+
+    @IBAction func favAction(_: UIButton) {
+        router.route(to: Routes.favrouite.rawValue, from: self, parameters: [:])
     }
 }
 

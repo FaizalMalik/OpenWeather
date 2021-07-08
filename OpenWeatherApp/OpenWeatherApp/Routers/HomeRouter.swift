@@ -23,6 +23,12 @@ class HomeRouter: Router {
                     context.present(citySearchVC, animated: true) {}
                 }
 
+            case HomeViewController.Routes.favrouite.rawValue:
+                if let favVC = context.storyboard?.instantiateViewController(withIdentifier: FavViewController.className) as? FavViewController {
+                    favVC.delegate = context as? CitySearchViewControllerDelegate
+                    context.present(favVC, animated: true) {}
+                }
+
             default:
                 break
             }

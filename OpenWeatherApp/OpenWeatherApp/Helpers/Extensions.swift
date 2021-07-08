@@ -89,3 +89,21 @@ public extension ClassNameProtocol {
 }
 
 extension NSObject: ClassNameProtocol {}
+
+// MARK: UITableView
+
+public extension UITableView {
+    func register<T: UITableViewCell>(cellType _: T.Type, bundle: Bundle? = nil) {
+        let className = String(describing: T.self)
+        let nib = UINib(nibName: className, bundle: bundle)
+        register(nib, forCellReuseIdentifier: className)
+    }
+
+    func register<T: UITableViewCell>(cellTypes: [T.Type], bundle: Bundle? = nil) {
+        cellTypes.forEach { register(cellType: $0, bundle: bundle) }
+    }
+
+    func dequeueReusableCell<T: UITableViewCell>(with _: T.Type, for indexPath: IndexPath) -> T {
+        return dequeueReusableCell(withIdentifier: String(describing: T.self), for: indexPath) as! T
+    }
+}

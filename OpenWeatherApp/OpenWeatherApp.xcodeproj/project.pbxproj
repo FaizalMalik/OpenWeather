@@ -40,6 +40,8 @@
 		BFAA81012696EE8B009122F3 /* HomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAA81002696EE8B009122F3 /* HomeRouter.swift */; };
 		BFAA810426970327009122F3 /* TableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAA810326970327009122F3 /* TableViewDataSource.swift */; };
 		BFAA810826970399009122F3 /* CityListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAA810726970399009122F3 /* CityListTableViewCell.swift */; };
+		BFAA8115269735F5009122F3 /* FavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAA8114269735F5009122F3 /* FavViewController.swift */; };
+		BFAA811826973638009122F3 /* CityListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFAA811726973637009122F3 /* CityListTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -79,6 +81,8 @@
 		BFAA81002696EE8B009122F3 /* HomeRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRouter.swift; sourceTree = "<group>"; };
 		BFAA810326970327009122F3 /* TableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewDataSource.swift; sourceTree = "<group>"; };
 		BFAA810726970399009122F3 /* CityListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityListTableViewCell.swift; sourceTree = "<group>"; };
+		BFAA8114269735F5009122F3 /* FavViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavViewController.swift; sourceTree = "<group>"; };
+		BFAA811726973637009122F3 /* CityListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CityListTableViewCell.xib; sourceTree = "<group>"; };
 		EC067A0CD2EF343A0BA967C0 /* Pods-OpenWeatherApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenWeatherApp.release.xcconfig"; path = "Target Support Files/Pods-OpenWeatherApp/Pods-OpenWeatherApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -259,6 +263,7 @@
 			children = (
 				BF5D3BB92695B4CD00AAE4D6 /* HomeViewController.swift */,
 				BF15B2C22696ECB300CDDE60 /* CitySearchViewController.swift */,
+				BFAA8114269735F5009122F3 /* FavViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -285,6 +290,7 @@
 			isa = PBXGroup;
 			children = (
 				BFAA810726970399009122F3 /* CityListTableViewCell.swift */,
+				BFAA811726973637009122F3 /* CityListTableViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -350,6 +356,7 @@
 			files = (
 				BF5D3BCA2695B74300AAE4D6 /* sky.mp4 in Resources */,
 				BF1417592692F4E20059189A /* LaunchScreen.storyboard in Resources */,
+				BFAA811826973638009122F3 /* CityListTableViewCell.xib in Resources */,
 				BF0A45DA2696B77D004A5252 /* LoaderAnimation.json in Resources */,
 				BF1417562692F4E20059189A /* Assets.xcassets in Resources */,
 				BF1417512692F4DB0059189A /* Main.storyboard in Resources */,
@@ -407,6 +414,7 @@
 			files = (
 				BF5D3BAB269598C000AAE4D6 /* WeatherService.swift in Sources */,
 				BFAA810826970399009122F3 /* CityListTableViewCell.swift in Sources */,
+				BFAA8115269735F5009122F3 /* FavViewController.swift in Sources */,
 				BF5D3BBE2695B4D800AAE4D6 /* HomeViewModel.swift in Sources */,
 				BF14174A2692F4DB0059189A /* AppDelegate.swift in Sources */,
 				BF5D3B9026958FF800AAE4D6 /* DynamicValue.swift in Sources */,

@@ -52,7 +52,7 @@ class HomeViewModel: HomeViewModelProtocol {
         vm.humidity = "Humidity: \(data.main.humidity) %"
         vm.descriptionWeather = data.weather?.first?.main ?? ""
         vm.wind = "Wind: \(vm.addUnit("km/h", toNumber: data.wind.speed))"
-        vm.weatherCurrent = vm.addDegreeSign(toNumber: data.main.temp)
+        vm.weatherCurrent = vm.addDegreeSign(toNumber: data.main.temp.round(to: 1))
         vm.sunRise = "🌤️ " + vm.convertUnixTo24HDateString(value: data.sys.sunrise)
         vm.sunSet = "🌥️ " + vm.convertUnixTo24HDateString(value: data.sys.sunset)
         vm.date = vm.convertUnixToDayAndTime(value: data.dt)

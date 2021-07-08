@@ -5,7 +5,23 @@
 import Foundation
 
 struct City: Codable {
-    let country: String?
-    let name: String?
-    let state: String?
+    var country: String?
+    var name: String?
+    var state: String?
+    var isFav: Bool? = false
+    init() {}
+}
+
+extension City {
+    var isSelected: City {
+        var _self = self
+        _self.isFav = true
+        return _self
+    }
+}
+
+extension City: Equatable {
+    static func == (lhs: City, rhs: City) -> Bool {
+        return (lhs.name == rhs.name) && (lhs.country == rhs.country)
+    }
 }

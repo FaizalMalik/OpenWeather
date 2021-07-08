@@ -12,6 +12,7 @@ struct App {
     static let baseURL = "https://api.openweathermap.org/"
     static let unit = "metric"
     static let backgroundVideo = "sky"
+    static let cityEntity = "CityDB"
 }
 
 enum ApiCalls {

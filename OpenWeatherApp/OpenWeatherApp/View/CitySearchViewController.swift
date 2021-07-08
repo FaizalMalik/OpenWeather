@@ -14,7 +14,11 @@ class CitySearchViewController: UIViewController {
     // MARK: Outlets
 
     @IBOutlet var searchBar: UISearchBar!
-    @IBOutlet var tableViewCityList: UITableView!
+    @IBOutlet var tableViewCityList: UITableView! {
+        didSet {
+            tableViewCityList.register(cellType: CityListTableViewCell.self)
+        }
+    }
 
     // MARK: Properties
 
@@ -53,6 +57,7 @@ class CitySearchViewController: UIViewController {
         viewModel.cityList.addAndNotify(fireNow: false, observer: self) { [weak self] _ in
             self?.updateDataSource()
         }
+        viewModel.fetchFavCityList()
     }
 
     // DataSource Update
@@ -60,6 +65,7 @@ class CitySearchViewController: UIViewController {
         datasourceCityList = TableViewDataSource(cellIdentifier: CityListTableViewCell.className, items: viewModel.cityList.value, configureCell: { cell, vm, _ in
 
             cell.city = vm
+            cell.delegate = self
         })
 
         DispatchQueue.main.async {
@@ -73,16 +79,6 @@ class CitySearchViewController: UIViewController {
     @IBAction func actionClose(_: Any) {
         dismiss(animated: true) {}
     }
-
-    /*
-     // MARK: - Navigation
-
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-         // Get the new view controller using segue.destination.
-         // Pass the selected object to the new view controller.
-     }
-     */
 }
 
 extension CitySearchViewController: UISearchBarDelegate {
@@ -92,6 +88,10 @@ extension CitySearchViewController: UISearchBarDelegate {
         }
 
         viewModel.fetchCityList(query: searchText)
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        viewModel.fetchCityList(query: searchBar.text ?? "")
     }
 }
 
@@ -103,5 +103,11 @@ extension CitySearchViewController: UITableViewDelegate {
         let city = viewModel.cityList.value[indexPath.row]
         delegate?.didSelectCity(city: city)
         dismiss(animated: true) {}
+    }
+}
+
+extension CitySearchViewController: CityListTableViewCellDelegate {
+    func didSelectFav(city: City) {
+        viewModel.saveFavCity(city: city)
     }
 }
