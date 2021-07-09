@@ -5,7 +5,19 @@
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="state" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="WeatherDB" representedClassName="WeatherDB" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="String"/>
+        <attribute name="descriptionWeather" optional="YES" attributeType="String"/>
+        <attribute name="humidity" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="sunRise" optional="YES" attributeType="String"/>
+        <attribute name="sunSet" optional="YES" attributeType="String"/>
+        <attribute name="tempFeel" optional="YES" attributeType="String"/>
+        <attribute name="weatherCurrent" optional="YES" attributeType="String"/>
+        <attribute name="wind" optional="YES" attributeType="String"/>
+    </entity>
     <elements>
         <element name="CityDB" positionX="-63" positionY="-18" width="128" height="74"/>
+        <element name="WeatherDB" positionX="-54" positionY="18" width="128" height="14"/>
     </elements>
 </model>

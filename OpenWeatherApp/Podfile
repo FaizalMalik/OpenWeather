@@ -10,4 +10,5 @@ target 'OpenWeatherApp' do
   # Lottie is a mobile library for Android and iOS that natively renders vector based animations and art in realtime with minimal code. https://github.com/airbnb/lottie-ios
 
   pod 'lottie-ios'
+  
 end

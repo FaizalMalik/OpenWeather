@@ -107,3 +107,15 @@ public extension UITableView {
         return dequeueReusableCell(withIdentifier: String(describing: T.self), for: indexPath) as! T
     }
 }
+
+// MARK: UIVIEWController
+
+extension UIViewController {
+    func showAlert(withTitle title: String = "No Internet", message: String = "Please check your internet connection to display the current weather ") {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: "ok", style: .default) { _ in
+        }
+        alertController.addAction(OKAction)
+        present(alertController, animated: true, completion: nil)
+    }
+}

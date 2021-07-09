@@ -55,12 +55,7 @@ class CitySearchViewModel: CitySearchViewModelProtocol {
                 let cityListSaved = try managedContext.fetch(fetchRequest)
                 var cityList = [City]()
                 for cityDB in cityListSaved {
-                    var cityObj = City()
-                    cityObj.name = cityDB.value(forKeyPath: "name") as? String
-                    cityObj.country = cityDB.value(forKeyPath: "country") as? String
-                    cityObj.state = cityDB.value(forKeyPath: "state") as? String
-                    cityObj.isFav = true
-                    cityList.append(cityObj)
+                    cityList.append(cityDB.fetchCity())
                 }
                 self.favCities.value = cityList
             } catch let error as NSError {
@@ -78,9 +73,7 @@ class CitySearchViewModel: CitySearchViewModelProtocol {
             let managedContext = AppDelegate.shared.persistentContainer.viewContext
             let entity = NSEntityDescription.entity(forEntityName: App.cityEntity, in: managedContext)!
             let cityDB = NSManagedObject(entity: entity, insertInto: managedContext)
-            cityDB.setValue(city.name, forKeyPath: "name")
-            cityDB.setValue(city.country ?? "", forKeyPath: "country")
-            cityDB.setValue(city.state ?? "", forKeyPath: "state")
+            cityDB.saveCity(city)
 
             do {
                 try managedContext.save()
@@ -94,7 +87,7 @@ class CitySearchViewModel: CitySearchViewModelProtocol {
     func cityExist(city: City) -> Bool {
         let managedObjectContext = AppDelegate.shared.persistentContainer.viewContext
 
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "CityDB")
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: App.cityEntity)
         fetchRequest.predicate = NSPredicate(format: "name = %@", city.name ?? "")
 
         var results: [NSManagedObject] = []

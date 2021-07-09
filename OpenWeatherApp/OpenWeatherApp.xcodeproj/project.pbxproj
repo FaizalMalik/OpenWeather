@@ -42,6 +42,7 @@
 		BFAA810826970399009122F3 /* CityListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAA810726970399009122F3 /* CityListTableViewCell.swift */; };
 		BFAA8115269735F5009122F3 /* FavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAA8114269735F5009122F3 /* FavViewController.swift */; };
 		BFAA811826973638009122F3 /* CityListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFAA811726973637009122F3 /* CityListTableViewCell.xib */; };
+		BFAA81202697FCE0009122F3 /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAA811F2697FCE0009122F3 /* CoreDataHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -83,6 +84,7 @@
 		BFAA810726970399009122F3 /* CityListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityListTableViewCell.swift; sourceTree = "<group>"; };
 		BFAA8114269735F5009122F3 /* FavViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavViewController.swift; sourceTree = "<group>"; };
 		BFAA811726973637009122F3 /* CityListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CityListTableViewCell.xib; sourceTree = "<group>"; };
+		BFAA811F2697FCE0009122F3 /* CoreDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHelper.swift; sourceTree = "<group>"; };
 		EC067A0CD2EF343A0BA967C0 /* Pods-OpenWeatherApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenWeatherApp.release.xcconfig"; path = "Target Support Files/Pods-OpenWeatherApp/Pods-OpenWeatherApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -122,6 +124,7 @@
 				BF0A45D22696B2DE004A5252 /* Loader.swift */,
 				BF0A45C4269609AA004A5252 /* WeatherFormatable.swift */,
 				BF0A45C926960F6C004A5252 /* Extensions.swift */,
+				BFAA811F2697FCE0009122F3 /* CoreDataHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -417,6 +420,7 @@
 				BFAA8115269735F5009122F3 /* FavViewController.swift in Sources */,
 				BF5D3BBE2695B4D800AAE4D6 /* HomeViewModel.swift in Sources */,
 				BF14174A2692F4DB0059189A /* AppDelegate.swift in Sources */,
+				BFAA81202697FCE0009122F3 /* CoreDataHelper.swift in Sources */,
 				BF5D3B9026958FF800AAE4D6 /* DynamicValue.swift in Sources */,
 				BF5D3BBA2695B4CD00AAE4D6 /* HomeViewController.swift in Sources */,
 				BF0A45D32696B2DE004A5252 /* Loader.swift in Sources */,

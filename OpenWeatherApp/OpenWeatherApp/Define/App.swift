@@ -13,6 +13,7 @@ struct App {
     static let unit = "metric"
     static let backgroundVideo = "sky"
     static let cityEntity = "CityDB"
+    static let weatherEntity = "WeatherDB"
 }
 
 enum ApiCalls {
