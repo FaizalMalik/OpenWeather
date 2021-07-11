@@ -3,8 +3,8 @@
 ////  OpenWeatherApp
 ////
 ////  Created by Faizal on 07/07/2021.
-////
-
+////sample commit
+//Sample commit 2
 import CoreData
 import Foundation
 
